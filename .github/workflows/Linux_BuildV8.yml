@@ -24,12 +24,11 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      - name: Check_V8
+      - name: check V8
         uses: actions/checkout@master
         with:
-          repository: https://github.com/v8/v8.git
+          repository: v8/v8
 
-      - name: Checkout_Depot_Tools
-        uses: actions/checkout@master
-        with:
-          repository: https://chromium.googlesource.com/chromium/tools/depot_tools.git
+      - name: checkout depot_tools
+         git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+         echo export PATH=\"\$PATH:`pwd`/depot_tools/\" >> ~/.bash_profile

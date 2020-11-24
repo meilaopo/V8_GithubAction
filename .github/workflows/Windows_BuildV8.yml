@@ -25,7 +25,8 @@ jobs:
       - name: build v8
         run: |
           git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-          set $env:PATH=$env:PATH+";$pwd\depot_tools"
+          echo $pwd\depot_tools
+          $env:PATH=$env:PATH+";$pwd\depot_tools"
           echo $env:Path
           set DEPOT_TOOLS_WIN_TOOLCHAIN=0
           set GYP_MSVS_VERSION=2019

@@ -6,9 +6,9 @@ name: BuildV8
 on:
   # Triggers the workflow on push or pull request events but only for the main branch
   push:
-    branches: [ master ]
+    branches: master
   pull_request:
-    branches: [ master ]
+    branches: master
   watch:
     types: started 
 

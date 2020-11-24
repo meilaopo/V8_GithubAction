@@ -30,5 +30,6 @@ jobs:
           repository: v8/v8
 
       - name: checkout depot_tools
-         git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-         echo export PATH=\"\$PATH:`pwd`/depot_tools/\" >> ~/.bash_profile
+        run: |
+          git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+          echo export PATH=\"\$PATH:`pwd`/depot_tools/\" >> ~/.bash_profile

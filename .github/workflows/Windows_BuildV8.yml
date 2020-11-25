@@ -10,7 +10,7 @@ on:
   pull_request:
     branches: master
   watch:
-    types: started 
+    types: started
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -18,20 +18,56 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: windows-latest
+    env:
+      working-directory: ${{github.workspace}}
+
+    if: github.event.repository.owner.id == github.event.sender.id
+
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      
-      - name: build v8
+      # test
+      - name: test env
+        shell: cmd
         run: |
-          git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-          echo $pwd\depot_tools
-          $env:PATH=$env:PATH+";$pwd\depot_tools"
-          echo $env:Path
-          set DEPOT_TOOLS_WIN_TOOLCHAIN=0
-          set GYP_MSVS_VERSION=2019
-          fetch v8
-          cd v8
-          gn gen --ide=vs out.gn\x64_solution
-          python tools\dev\v8gen.py x64.release
-          ninja -C out.gn\x64.release
+          echo ${{env.working-directory}}
+            
+            
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+            repository: V8/V8
+            path: V8 
+
+      # Runs a single command using the runners shell
+      - name: download depot_tools
+        shell: cmd
+        working-directory: ${{env.working-directory}}
+        run: |
+          curl https://storage.googleapis.com/chrome-infra/depot_tools.zip  >./depot_tools.zip
+          dir
+          
+      # unzip depot_tools
+      - name: unzip depot_tools
+        shell: cmd
+        working-directory: ${{env.working-directory}}
+        run: |
+          cd /D ${{env.working-directory}}
+          tar -xf ./depot_tools.zip
+          
+      # add depot_tools & VS2019 to PATH
+      - name: add depot_tools & VS2019 to PATH
+        shell: cmd
+        working-directory: ${{env.working-directory}}
+        run: |
+          setx /M path "%path%;${{env.working-directory}}\depot_tools"
+          setx /M vs2019_install "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise"
+          echo %path%
+          echo %vs2019_install%
+      
+     # test gclient
+      - name: test gclient
+        shell: cmd
+        working-directory: ${{env.working-directory}}
+        run: |
+          gclient

@@ -78,8 +78,8 @@ jobs:
           gclient sync
 
           
-     # checkut V8
-      - name: checkout V8
+     # build V8
+      - name: build V8
         shell: cmd
         working-directory: ${{env.working-directory}}
         run: |

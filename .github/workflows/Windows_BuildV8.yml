@@ -42,12 +42,15 @@ jobs:
           dir
           
       # unzip depot_tools
-      - name: unzip depot_tools
+      - name: unzip & update depot_tools
         shell: cmd
         working-directory: ${{env.working-directory}}
         run: |
           cd /D ${{env.working-directory}}
           tar -xf ./depot_tools.zip
+          
+          cd ./depot_tools
+          gclient
           
       # add depot_tools & VS2019 to PATH
       - name: add depot_tools & VS2019 to PATH
@@ -56,19 +59,13 @@ jobs:
         run: |
           setx /M path "%path%;${{env.working-directory}}\depot_tools"
           setx /M vs2019_install "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise"
+          
           echo %path%
           echo %vs2019_install%
           
           setx /M DEPOT_TOOLS_WIN_TOOLCHAIN "0"
-          
           where python
       
-     # Update depot_tools
-      - name: Update depot_tools
-        shell: cmd
-        working-directory: ${{env.working-directory}}
-        run: |
-          gclient
           
      # checkut V8
       - name: checkout V8

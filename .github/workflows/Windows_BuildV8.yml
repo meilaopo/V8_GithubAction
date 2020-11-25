@@ -47,10 +47,11 @@ jobs:
         working-directory: ${{env.working-directory}}
         run: |
           cd /D ${{env.working-directory}}
-          tar -xf ./depot_tools.zip
-          
-          cd ./depot_tools
+          mkdir depot_tools 
+          tar -xf ../depot_tools.zip
           gclient
+          cd ../
+          dir
           
       # add depot_tools & VS2019 to PATH
       - name: add depot_tools & VS2019 to PATH

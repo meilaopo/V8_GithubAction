@@ -48,6 +48,7 @@ jobs:
         run: |
           cd /D ${{env.working-directory}}
           mkdir depot_tools 
+          cd depot_tools
           tar -xf ../depot_tools.zip
           gclient
           cd ../

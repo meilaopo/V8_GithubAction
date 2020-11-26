@@ -39,7 +39,7 @@ jobs:
         run: |
           echo on
           
-          sudo export PATH="$PATH:$(pwd)/depot_tools"
+          PATH="$PATH:$(pwd)/depot_tools"
           
           echo "begin fetch V8"
           ./depot_tools/fetch V8

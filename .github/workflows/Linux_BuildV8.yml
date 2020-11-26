@@ -31,9 +31,7 @@ jobs:
         working-directory: ${{env.working-directory}}
         run: |
           git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-          mkdir depot_tools 
           cd depot_tools
-          unzip ../depot_tools.zip
           gclient
           
           

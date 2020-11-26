@@ -31,11 +31,7 @@ jobs:
         working-directory: ${{env.working-directory}}
         run: |
           git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-          cd ./depot_tools
-          ls
-          gclient
-          
-          
+
      # checkut & build V8
       - name: checkut & build V8
         shell: bash
@@ -43,6 +39,9 @@ jobs:
         run: |
           echo on
           export PATH=${{env.working-directory}}/depot_tools:$PATH
+          
+          chmod 777 fetch
+          chmod 777 gclient
           
           echo "begin fetch V8"
           fetch V8

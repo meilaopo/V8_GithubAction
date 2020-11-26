@@ -25,12 +25,14 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
      
-      # download & unzip depot_tools
-      - name: download & unzip depot_tools
+      # clone depot_tools
+      - name: dclone depot_tools
         shell: bash
         working-directory: ${{env.working-directory}}
         run: |
           git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
+          cd depot_tools
+          gclient
 
      # checkut & build V8
       - name: checkut & build V8

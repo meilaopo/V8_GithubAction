@@ -38,7 +38,8 @@ jobs:
         working-directory: ${{env.working-directory}}
         run: |
           echo on
-          export PATH=${{env.working-directory}}/depot_tools;$PATH
+          
+          export PATH="$PATH:$pwd/depot_tools"
           
           echo "begin fetch V8"
           sh fetch V8

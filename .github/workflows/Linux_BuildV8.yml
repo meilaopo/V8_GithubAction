@@ -31,9 +31,8 @@ jobs:
         working-directory: ${{env.working-directory}}
         run: |
           git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
-          cd depot_tools
-          ./gclient
-          cd ../
+          
+          ./depot_tools/gclient
 
      # checkut & build V8
       - name: checkut & build V8

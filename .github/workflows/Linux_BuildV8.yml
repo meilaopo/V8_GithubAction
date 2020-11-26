@@ -40,17 +40,17 @@ jobs:
           echo on
           export PATH=${{env.working-directory}}/depot_tools:$PATH
           
-          chmod 777 fetch
-          chmod 777 gclient
+          chmod 777 ./fetch
+          chmod 777 ./gclient
           
           echo "begin fetch V8"
-          fetch V8
+          ./fetch V8
           echo "end fetch V8"
           
           cd V8
           
           echo "begin gclient sync"
-          gclient sync
+          ./gclient sync
           echo "end gclient sync"
           
-          python tools/dev/gm.py x64.release
+          python ./tools/dev/gm.py x64.release

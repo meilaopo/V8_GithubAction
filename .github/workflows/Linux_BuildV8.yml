@@ -32,7 +32,6 @@ jobs:
         run: |
           git clone https://chromium.googlesource.com/chromium/tools/depot_tools.git
           
-          ./depot_tools/gclient
 
      # checkut & build V8
       - name: checkut & build V8
@@ -44,13 +43,8 @@ jobs:
           PATH="$PATH:$(pwd)/depot_tools"
           
           echo "begin fetch V8"
-          ./depot_tools/fetch V8
+          fetch v8
           echo "end fetch V8"
           
-          cd V8
-          
-          echo "begin gclient sync"
-          ./depot_tools/gclient sync
-          echo "end gclient sync"
-          
-          python ./tools/dev/gm.py x64.release
+          python ./tools/dev/v8gen.py x64.release
+          ninja -C out.gn/x64.release

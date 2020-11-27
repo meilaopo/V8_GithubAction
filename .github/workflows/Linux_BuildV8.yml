@@ -45,6 +45,6 @@ jobs:
           echo "begin fetch V8"
           fetch v8
           echo "end fetch V8"
-          
+          cd v8
           python ./tools/dev/v8gen.py x64.release
           ninja -C out.gn/x64.release

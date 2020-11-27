@@ -1,0 +1,57 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Android_BuildV8
+
+# Controls when the action will run. 
+on:
+  # Triggers the workflow on push or pull request events but only for the main branch
+  push:
+    branches: master
+  pull_request:
+    branches: master
+  watch:
+    types: started
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: windows-latest
+    env:
+      working-directory: ${{github.workspace}}
+
+    if: github.event.repository.owner.id == github.event.sender.id
+
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+     
+      # download & unzip depot_tools
+      - name: download & unzip depot_tools
+        shell: cmd
+        working-directory: ${{env.working-directory}}
+        run: |
+          curl https://storage.googleapis.com/chrome-infra/depot_tools.zip  >./depot_tools.zip
+          mkdir depot_tools 
+          cd depot_tools
+          tar -xf ../depot_tools.zip
+          gclient
+          
+          
+     # checkut & build V8
+      - name: checkut & build V8
+        shell: powershell
+        working-directory: ${{env.working-directory}}
+        run: |
+          echo on
+          $ENV:vs2019_install="C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise"
+          $ENV:DEPOT_TOOLS_WIN_TOOLCHAIN="0"
+          $ENV:GYP_MSVS_VERSION="2019"
+          $ENV:PATH="${{env.working-directory}}\depot_tools;$ENV:PATH"
+          
+          fetch V8
+          
+          cd V8
+          
+          type .gclient
